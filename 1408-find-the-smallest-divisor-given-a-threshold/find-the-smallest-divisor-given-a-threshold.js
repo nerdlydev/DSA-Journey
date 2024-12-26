@@ -22,7 +22,7 @@ var smallestDivisor = function(arr, limit) {
 };
 
 function sumByD(arr, div) {
-    let n = arr.length; // size of array
+    let n = arr.length; 
     let sum = 0;
     for (let i = 0; i < n; i++) {
         sum += Math.ceil(arr[i] / div);
