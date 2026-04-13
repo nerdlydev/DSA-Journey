@@ -4,43 +4,51 @@
  * @return {number}
  */
 
-function findMax(v) {
-    let maxi = -Infinity;
-    let n = v.length;
-    // Find the maximum
-    for (let i = 0; i < n; i++) {
-        maxi = Math.max(maxi, v[i]);
+function check ( piles, mid , k)
+{
+    let total = 0;
+    for( let i = 0; i <piles.length; i++)
+    {
+        total += Math.floor((piles[i] + mid -1)/mid);
     }
-    return maxi;
+
+    return total <=k;
 }
 
-function calculateTotalHours(v, hourly) {
-    let totalH = 0;
-    let n = v.length;
-    // Find total hours
-    for (let i = 0; i < n; i++) {
-        totalH += Math.ceil(v[i] / hourly);
+var minEatingSpeed = function(piles, h) {
+//   let mx = Math.max(...piles);
+//   for( let s = 1; s <= mx; s++)
+//   {
+//     let rt = 0;
+//     for (let i = 0; i<piles.length; i++)
+//     {
+//         rt += Math.floor((piles[i] + s - 1)/ s);
+//     }
+//     if (rt <= h)
+//     {
+//         return s;
+//     }
+//   }  
+//   return mx;
+
+let low = 1;
+let high = Math.max(...piles);
+let ans = high;
+
+while (low <= high)
+{
+    let mid = low + Math.floor((high - low)/2);
+
+    if (check(piles,mid,h) === true)
+    {
+        high = mid - 1;
+        ans = mid;
+    } else {
+        low = mid + 1;
     }
-    return totalH;
 }
 
-
-var minEatingSpeed = function(v, h) {
-    let low = 1;
-    let high = findMax(v);
-
-
-    // Apply binary search
-    while (low <= high) {
-        let mid = Math.floor((low + high) / 2);
-        let totalH = calculateTotalHours(v, mid);
-        if (totalH <= h) {
-            high = mid - 1;
-        } else {
-            low = mid + 1;
-        }
-    }
-    return low;
-
+return ans;
 
 };
+
