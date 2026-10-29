@@ -3,34 +3,37 @@
  * @return {void} Do not return anything, modify nums in-place instead.
  */
 var sortColors = function(nums) {
-//   let count0 = 0, count1 = 0, count2 = 0;
+    let left = 0;
 
-//     for(let i = 0; i < nums.length; i++)
-//     {
-//         if (nums[i] === 0) count0++;
-//         else if (nums[i] === 1) count1++;
-//         else count2++;
-
-// }
-// for(let i = 0; i < count0; i++ ) nums[i] = 0;
-// for(let j = count0; j < count0 + count1; j++ ) nums[j] = 1;
-// for(let k = count0 + count1; k < nums.length; k++ ) nums[k] = 2;
-
-let low = 0;
-  let mid = 0;
-  let high = nums.length - 1;
-
-  while (mid <= high) {
-    if (nums[mid] === 0) {
-      [nums[low], nums[mid]] = [nums[mid], nums[low]];
-      low++;
-      mid++;
-    } else if (nums[mid] === 1) {
-      mid++;
-    } else { // nums[mid] === 2
-      [nums[mid], nums[high]] = [nums[high], nums[mid]];
-      high--;
+    // Pass 1: Move all 0s to the beginning
+    for (let i = 0; i < nums.length; i++) {
+        if (nums[i] === 0) {
+            [nums[left], nums[i]] = [nums[i], nums[left]];
+            left++;
+        }
     }
-  }
 
+    // Pass 2: Move all 1s after the 0s
+    for (let i = left; i < nums.length; i++) {
+        if (nums[i] === 1) {
+            [nums[left], nums[i]] = [nums[i], nums[left]];
+            left++;
+        }
+    }
+
+    // let low = 0, mid = 0, high = nums.length - 1;
+    // while (mid <= high) {
+    //     if (nums[mid] === 0) {
+    //         [nums[low], nums[mid]] = [nums[mid], nums[low]];
+    //         low++;
+    //         mid++;
+    //     } else if (nums[mid] === 1) {
+    //         mid++;
+    //     } else {
+    //         [nums[mid], nums[high]] = [nums[high], nums[mid]];
+    //         high--;
+    //     }
+    // }
 };
+
+
