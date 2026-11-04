@@ -24,13 +24,11 @@ var merge = function(nums1, m, nums2, n) {
 
     while ( p2 >= 0)
     {
-        if(nums1[p1] > nums2[p2] )
+        if(p1 >= 0 && nums1[p1] > nums2[p2])
         {
-            if( p1 >= 0 && nums1[p1] > nums2[p2]){
             nums1[p3] = nums1[p1];
             p3--;
             p1--;
-            }
         } else {
             nums1[p3] = nums2[p2];
             p3--;
