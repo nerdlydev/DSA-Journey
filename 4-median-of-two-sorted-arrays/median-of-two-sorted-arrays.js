@@ -3,35 +3,48 @@
  * @param {number[]} nums2
  * @return {number}
  */
-var findMedianSortedArrays = function(a, b) {
-    let n1 = a.length, n2 = b.length;
-    // if n1 is bigger swap the arrays:
-    if (n1 > n2) return findMedianSortedArrays(b, a);
+var merge = function(nums1, m, nums2, n) {
+    let p1 = m - 1; 
+    let p2 = n -1;
+    let p3 = m + n - 1;
 
-    let n = n1 + n2; // total length
-    let left = Math.floor((n1 + n2 + 1) / 2); // length of left half
-    // apply binary search:
-    let low = 0, high = n1;
-    while (low <= high) {
-        let mid1 = Math.floor((low + high) / 2);
-        let mid2 = left - mid1;
-        // calculate l1, l2, r1, and r2
-        let l1 = Number.MIN_SAFE_INTEGER, l2 = Number.MIN_SAFE_INTEGER;
-        let r1 = Number.MAX_SAFE_INTEGER, r2 = Number.MAX_SAFE_INTEGER;
-        if (mid1 < n1) r1 = a[mid1];
-        if (mid2 < n2) r2 = b[mid2];
-        if (mid1 - 1 >= 0) l1 = a[mid1 - 1];
-        if (mid2 - 1 >= 0) l2 = b[mid2 - 1];
-
-        if (l1 <= r2 && l2 <= r1) {
-            if (n % 2 === 1) return Math.max(l1, l2);
-            else return (Math.max(l1, l2) + Math.min(r1, r2)) / 2;
+    if (n === 0) return nums1;
+    if(m === 0)
+    {
+        while(p2 >= 0){
+        nums1[p3] = nums2[p2];
+        p2--;
+        p3--;
         }
+        return nums2;
 
-        // eliminate the halves:
-        else if (l1 > r2) high = mid1 - 1;
-        else low = mid1 + 1;
     }
-    return 0; // dummy statement
 
+    while ( p2 >= 0)
+    {
+        if(p1 >= 0 && nums1[p1] > nums2[p2])
+        {
+            nums1[p3] = nums1[p1];
+            p3--;
+            p1--;
+        } else {
+            nums1[p3] = nums2[p2];
+            p3--;
+            p2--;
+        }
+    }
+    return nums1;
+};
+
+var findMedianSortedArrays = function(nums1, nums2) {
+let ans = 0;
+let mergeArr = merge(nums1, nums1.length, nums2, nums2.length);
+if(mergeArr.length % 2 === 0)
+{
+    ans = (mergeArr[mergeArr.length/2] + mergeArr[mergeArr.length/2 - 1]) / 2;
+} else {
+    ans = mergeArr[Math.ceil(mergeArr.length/2) - 1];
+}
+
+return ans;
 };
